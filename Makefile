@@ -11,7 +11,8 @@ COMPOSE_CMD = docker compose \
 	--project-name $$(val=$$(grep -m1 '^DOCKER_APP_NAME=' $(ROOT_ENV) | cut -d'=' -f2-); echo $${val:-mostafa-project})
 
 .PHONY: symlink init-env sync-env destroy build rebuild-container up down \
-        restart conf ps php-bash web-bash logs logs-watch log-php reset-data test
+        restart conf ps php-bash web-bash logs logs-watch log-php reset-data \
+        fix-pint test reset-ide-helper test-pint test-phpstan test-phpunit-coverage
 
 # Load environment variables from .env if it exists
 -include .env
@@ -84,8 +85,23 @@ logs-watch: sync-env
 log-php: sync-env
 	$(COMPOSE_CMD) logs php
 
+reset-ide-helper: sync-env
+	$(COMPOSE_CMD) exec -T --user www-data php sh -c 'COMPOSER=composer.script.json composer run-script reset:ide-helper'
+
 reset-data: sync-env
-	$(COMPOSE_CMD) exec -T --user www-data php sh -c 'php artisan migrate:refresh --seed'
+	$(COMPOSE_CMD) exec -T --user www-data php sh -c 'COMPOSER=composer.script.json composer run-script reset:data'
+
+fix-pint: sync-env
+	$(COMPOSE_CMD) exec -T --user www-data php sh -c 'COMPOSER=composer.script.json composer run-script fix:pint'
 
 test: sync-env
-	$(COMPOSE_CMD) exec -T --user www-data php sh -c 'composer run-script full:test'
+	$(COMPOSE_CMD) exec -T --user www-data php sh -c 'COMPOSER=composer.script.json composer run-script full:test'
+
+test-pint: sync-env
+	$(COMPOSE_CMD) exec -T --user www-data php sh -c 'set -e; COMPOSER=composer.script.json composer run-script test:pint'
+
+test-phpstan: sync-env
+	$(COMPOSE_CMD) exec -T --user www-data php sh -c 'COMPOSER=composer.script.json composer run-script test:phpstan'
+
+test-phpunit-coverage: sync-env
+	$(COMPOSE_CMD) exec -T --user www-data php sh -c 'COMPOSER=composer.script.json composer run-script test:phpunit-coverage'
