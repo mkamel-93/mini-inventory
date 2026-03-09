@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton('toggle-cache', fn () => new \App\Support\ToggleCacheSupport);
     }
 
     /**
