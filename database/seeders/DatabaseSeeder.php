@@ -16,41 +16,35 @@ class DatabaseSeeder extends Seeder
     use WithoutModelEvents;
 
     /**
-     * Seed the application's database.
+     * Seed the application's database using external config data.
      */
     public function run(): void
     {
-        // Create 1 warehouse
-        $warehouses = Warehouse::factory(2)
-            ->create();
+        $data = config('warehouse-data');
 
-        // Create 5 inventory items
-        $inventoryItems = InventoryItem::factory(5)->create();
-
-        // Safely take up to 5 items (even if fewer exist)
-        $items = $inventoryItems->shuffle()->take(5);
-
-        foreach ($warehouses as $warehouse) {
-            foreach ($items as $item) {
-                Stock::factory()
-                    ->forWarehouse($warehouse)
-                    ->forInventoryItem($item)
-                    ->create();
-            }
+        // 1. Seed Warehouses
+        foreach ($data['warehouses'] as $warehouse) {
+            Warehouse::upsert($warehouse, ['name'], ['location']);
         }
 
-        // Create 3 stock transfers
-        for ($i = 0; $i < 3; $i++) {
-            $from = $warehouses->random();
-            $to = $warehouses->where('id', '!=', $from->id)->random(); // ensure different warehouse
-            $item = $inventoryItems->random();
-
-            StockTransfer::factory()->create([
-                'from_warehouse_id' => $from->id,
-                'to_warehouse_id' => $to->id,
-                'inventory_item_id' => $item->id,
-                'quantity' => fake()->numberBetween(1, 20),
-            ]);
+        // 2. Seed Inventory Items
+        foreach ($data['inventory_items'] as $item) {
+            InventoryItem::upsert($item, ['id'], ['name', 'sku', 'price', 'description']);
         }
+
+        // 3. Seed Stock Levels
+        foreach ($data['stock'] as $stock) {
+            Stock::upsert($stock, ['id'], ['warehouse_id', 'inventory_item_id', 'quantity']);
+        }
+
+        // 4. Seed Stock Transfers
+        //        foreach ($data['stock_transfers'] as $transfer) {
+        //            StockTransfer::upsert($transfer, ['id'], [
+        //                'from_warehouse_id',
+        //                'to_warehouse_id',
+        //                'inventory_item_id',
+        //                'quantity',
+        //            ]);
+        //        }
     }
 }
