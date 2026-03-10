@@ -100,7 +100,7 @@
         ],
         "test:phpunit-coverage": [
             "echo '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'",
-            "@php artisan test --parallel -c phpunit.xml --coverage --min=80"
+            "@php artisan test -c phpunit.xml --coverage --min=90"
         ]
     },
     "config": {
