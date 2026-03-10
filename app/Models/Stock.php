@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Database\Factories\StockFactory;
+use App\Events\LowStockDetectedEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -42,11 +43,36 @@ class Stock extends Pivot
     protected function casts(): array
     {
         return [
+            'warehouse_id' => 'integer',
+            'inventory_item_id' => 'integer',
             'quantity' => 'integer',
         ];
     }
 
-    protected static function booted() {}
+    protected static function booted()
+    {
+        static::saved(function (Stock $stock) {
+            $defaultMinQuantity = 5;
+            $previousQuantity = $stock->getOriginal('quantity');
+            $newQuantity = $stock->quantity;
+
+            if ($newQuantity < $defaultMinQuantity && $previousQuantity >= $defaultMinQuantity) {
+                $stock->loadMissing(['inventoryItem', 'warehouse']);
+
+                if ($stock->warehouse && $stock->inventoryItem) {
+                    event(new LowStockDetectedEvent($stock->warehouse, $stock->inventoryItem));
+
+                    logger()->info('LowStockDetectedEvent dispatched successfully', [
+                        'warehouse_name' => $stock->warehouse->name,
+                        'inventory_item_name' => $stock->inventoryItem->name,
+                        'current_quantity' => $newQuantity,
+                    ]);
+                } else {
+                    logger()->warning("Low stock detected, but relations are missing for Stock ID: {$stock->id}");
+                }
+            }
+        });
+    }
 
     /**
      * Get the warehouse that owns the stock.
