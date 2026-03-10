@@ -35,17 +35,17 @@ return [
 
     'stock' => [
         ['id' => 1, 'warehouse_id' => 1, 'inventory_item_id' => 101, 'quantity' => 120],
-        //        ['id' => 2, 'warehouse_id' => 2, 'inventory_item_id' => 101, 'quantity' => 45],
-        //        ['id' => 3, 'warehouse_id' => 1, 'inventory_item_id' => 104, 'quantity' => 200],
-        //        ['id' => 4, 'warehouse_id' => 3, 'inventory_item_id' => 104, 'quantity' => 85],
-        //        ['id' => 5, 'warehouse_id' => 2, 'inventory_item_id' => 109, 'quantity' => 12],
-        //        ['id' => 6, 'warehouse_id' => 1, 'inventory_item_id' => 106, 'quantity' => 55],
-        //        ['id' => 7, 'warehouse_id' => 3, 'inventory_item_id' => 111, 'quantity' => 30],
-        //        ['id' => 8, 'warehouse_id' => 2, 'inventory_item_id' => 114, 'quantity' => 22],
-        //        ['id' => 9, 'warehouse_id' => 1, 'inventory_item_id' => 102, 'quantity' => 15],
-        //        ['id' => 10, 'warehouse_id' => 3, 'inventory_item_id' => 103, 'quantity' => 100],
-        //        ['id' => 11, 'warehouse_id' => 2, 'inventory_item_id' => 115, 'quantity' => 500],
-        //        ['id' => 12, 'warehouse_id' => 1, 'inventory_item_id' => 112, 'quantity' => 40],
+        ['id' => 2, 'warehouse_id' => 2, 'inventory_item_id' => 101, 'quantity' => 45],
+        ['id' => 3, 'warehouse_id' => 1, 'inventory_item_id' => 104, 'quantity' => 200],
+        ['id' => 4, 'warehouse_id' => 3, 'inventory_item_id' => 104, 'quantity' => 85],
+        ['id' => 5, 'warehouse_id' => 2, 'inventory_item_id' => 109, 'quantity' => 12],
+        ['id' => 6, 'warehouse_id' => 1, 'inventory_item_id' => 106, 'quantity' => 55],
+        ['id' => 7, 'warehouse_id' => 3, 'inventory_item_id' => 111, 'quantity' => 30],
+        ['id' => 8, 'warehouse_id' => 2, 'inventory_item_id' => 114, 'quantity' => 22],
+        ['id' => 9, 'warehouse_id' => 1, 'inventory_item_id' => 102, 'quantity' => 15],
+        ['id' => 10, 'warehouse_id' => 3, 'inventory_item_id' => 103, 'quantity' => 100],
+        ['id' => 11, 'warehouse_id' => 2, 'inventory_item_id' => 115, 'quantity' => 500],
+        ['id' => 12, 'warehouse_id' => 1, 'inventory_item_id' => 112, 'quantity' => 40],
     ],
 
     'stock_transfers' => [

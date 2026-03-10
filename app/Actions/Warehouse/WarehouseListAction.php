@@ -16,6 +16,7 @@ class WarehouseListAction
     public function __invoke(WarehouseListRequest $request): JsonResponse
     {
         $dto = WarehouseFilterDTO::fromRequest($request);
+
         $cacheKey = $dto->toCacheKey('warehouses');
 
         $data = ToggleCache::remember($cacheKey, function () use ($dto) {

@@ -1,0 +1,500 @@
+{
+	"info": {
+		"_postman_id": "feb415c9-10af-4d80-82fa-57f14c6c49ee",
+		"name": "Mini-inventory",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31305944",
+		"_collection_link": "https://mostafa-masoud-team.postman.co/workspace/Mostafa-Workspace~bb0a92dd-0578-4906-8713-435de60f6613/collection/31305944-feb415c9-10af-4d80-82fa-57f14c6c49ee?action=share&source=collection_link&creator=31305944"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {\r",
+									"    \r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    if (jsonData && jsonData.data) {\r",
+									"        pm.environment.set(\"token\", jsonData.data.token);\r",
+									"        pm.collectionVariables.set(\"token\", jsonData.data.token);\r",
+									"        \r",
+									"        console.log(\"Register Successful: Token has been updated.\");\r",
+									"    }\r",
+									"} else {\r",
+									"    console.log(\"Register Failed with status: \" + pm.response.code + \". Token not updated.\");\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is for route /register 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"mostafa.masoud\",\r\n    \"email\": \"m.masoud@gmail.com\",\r\n    \"password\": \"Pa$$w0rd!\",\r\n    \"password_confirmation\": \"Pa$$w0rd!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {\r",
+									"    \r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    if (jsonData && jsonData.data) {\r",
+									"        pm.environment.set(\"token\", jsonData.data.token);\r",
+									"        pm.collectionVariables.set(\"token\", jsonData.data.token);\r",
+									"        \r",
+									"        console.log(\"Login Successful: Token has been updated.\");\r",
+									"    }\r",
+									"    \r",
+									"} else {\r",
+									"    console.log(\"Login Failed with status: \" + pm.response.code + \". Token not updated.\");\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is for route /register 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"m.masoud@gmail.com\",\r\n    \"password\": \"Pa$$w0rd!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Warehouses",
+			"item": [
+				{
+					"name": "warehouses-list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/warehouses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"warehouses"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "West",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "per_page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "warehouse/show-inventory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/warehouses/1/inventory",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"warehouses",
+								"1",
+								"inventory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "warehouses-stock-transfers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from_warehouse_id\": 1,\r\n    \"to_warehouse_id\": 2,\r\n    \"inventory_item_id\": 101,\r\n    \"quantity\": 116\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/warehouses-stock-transfers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"warehouses-stock-transfers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inventory-items",
+			"item": [
+				{
+					"name": "warehouses-inventory-item-list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/warehouses-inventory-item-list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"warehouses-inventory-item-list"
+							],
+							"query": [
+								{
+									"key": "warehouse_id",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "1TB",
+									"disabled": true
+								},
+								{
+									"key": "min_price",
+									"value": "35",
+									"disabled": true
+								},
+								{
+									"key": "max_price",
+									"value": "50",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "per_page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "",
+			"disabled": true
+		},
+		{
+			"key": "url",
+			"value": "http://172.19.0.12"
+		},
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}

@@ -7,6 +7,7 @@ use App\Models\Warehouse;
 use App\Models\InventoryItem;
 use App\DTOs\StockTransferDTO;
 use Illuminate\Http\JsonResponse;
+use App\Actions\Warehouse\WarehouseStockTransferAction;
 use App\Http\Requests\API\Warehouse\WarehouseStockTransferRequest;
 
 test('it throws validation exception when transferring more stock than available', function () {
